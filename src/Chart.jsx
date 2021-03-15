@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { readString } from "react-papaparse";
 import {
   LineChart,
   Line,
@@ -6,60 +7,29 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
-  Brush,
-  AreaChart,
-  Area,
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const Chart = (props) => {
+  const { label } = props;
 
-const Chart = props => {
-  const { label, } = props;
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("datasets/coin_Bitcoin.csv")
+      .then((response) => response.text())
+      .then((content) => {
+        const parsed = readString(content, { delimiter: ",", header: true });
+        const converted = parsed.data.map(row => ({ Close: parseFloat(row.Close), ...row }));
+        setData(converted);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <h4 style={{ textAlign: "center", marginTop: "45%" }}>Loading</h4>;
+  }
   return (
     <div style={{ width: "100%" }}>
       <h4>{label}</h4>
@@ -69,7 +39,7 @@ const Chart = props => {
           width={500}
           height={200}
           data={data}
-          syncId="anyId"
+          syncId="cryptoCharts"
           margin={{
             top: 10,
             right: 30,
@@ -78,35 +48,18 @@ const Chart = props => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
+          <XAxis dataKey="Date" />
+          <YAxis type={"number"} domain={["dataMin", "dataMax"]} />
           <Tooltip />
-          <Line type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+          <Line
+            type="monotone"
+            dataKey="Close"
+            stroke="#8884d8"
+            fill="#8884d8"
+            dot={false}
+          />
         </LineChart>
       </ResponsiveContainer>
-      <p>Maybe some other content</p>
-      {/* 
-    <ResponsiveContainer width="100%" height={200}>
-      <LineChart
-        width={500}
-        height={200}
-        data={data}
-        syncId="anyId"
-        margin={{
-          top: 10,
-          right: 30,
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="pv" stroke="#82ca9d" fill="#82ca9d" />
-        <Brush />
-      </LineChart>
-    </ResponsiveContainer> */}
     </div>
   );
 };

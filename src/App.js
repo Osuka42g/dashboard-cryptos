@@ -18,17 +18,17 @@ const charts = [
     value: "ETH",
   },
   {
-    label: "XRP",
-    value: "XRP",
+    label: "DOGE",
+    value: "DOGE",
   },
   {
-    label: "BTH",
-    value: "BTH",
+    label: "XRP",
+    value: "XRP",
   },
 ];
 
 function App() {
-  const defaultSelection = [charts[0], charts[1], charts[2]];
+  const defaultSelection = [charts[0]];
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -43,9 +43,9 @@ function App() {
   return (
     <Grid fluid>
       <Row>
-        {selected.map((e) => {
+        {selected.map((e, i) => {
           return (
-            <Col xs={6} md={4}>
+            <Col xs={6} md={4} key={i}>
               <Chart {...e} />
             </Col>
           );
