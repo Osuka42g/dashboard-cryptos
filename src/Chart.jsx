@@ -59,10 +59,10 @@ const data = [
 ];
 
 const Chart = props => {
-  const { title, } = props;
+  const { label, } = props;
   return (
     <div style={{ width: "100%" }}>
-      <h4>{title}</h4>
+      <h4>{label}</h4>
 
       <ResponsiveContainer width="100%" height={200}>
         <LineChart

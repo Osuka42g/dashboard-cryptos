@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { LineChart, Line } from "recharts";
-
 import { Grid, Row, Col } from "react-flexbox-grid";
+import Select from "react-select";
 
 import Chart from "./Chart";
 
@@ -9,41 +8,64 @@ import datasource from "./datasource";
 
 import "./App.css";
 
+const charts = [
+  {
+    label: "BTC",
+    value: "BTC",
+  },
+  {
+    label: "ETH",
+    value: "ETH",
+  },
+  {
+    label: "XRP",
+    value: "XRP",
+  },
+  {
+    label: "BTH",
+    value: "BTH",
+  },
+];
+
 function App() {
+  const defaultSelection = [charts[0], charts[1], charts[2]];
+
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     setData(datasource);
+    setSelected(defaultSelection);
   }, []);
 
-  const charts = [
-    {
-      title: "BTC",
-    },
-    {
-      title: "ETH",
-    },
-    {
-      title: "XRP",
-    },
-    {
-      title: "BTH",
-    },
-  ];
+  const currencies = charts;
 
   return (
     <Grid fluid>
       <Row>
-        {charts.map((e) => {
-          return <Col xs={6} md={4}>
-            <Chart {...e} />
-          </Col>;
+        {selected.map((e) => {
+          return (
+            <Col xs={6} md={4}>
+              <Chart {...e} />
+            </Col>
+          );
         })}
+      </Row>
+      <Row>
+        <Col xs={12} md={12}>
+          <Select
+            defaultValue={defaultSelection}
+            isMulti
+            name="currencies-select"
+            options={currencies}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={setSelected}
+          />
+        </Col>
       </Row>
     </Grid>
   );
-
-  // return <div className="App"><Chart /></div>;
 }
 
 export default App;
