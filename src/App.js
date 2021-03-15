@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { LineChart, Line } from "recharts";
+
+import { Grid, Row, Col } from "react-flexbox-grid";
+
+import Chart from "./Chart";
+
+import datasource from "./datasource";
+
+import "./App.css";
 
 function App() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData(datasource);
+  }, []);
+
+  const charts = [
+    {
+      title: "BTC",
+    },
+    {
+      title: "ETH",
+    },
+    {
+      title: "XRP",
+    },
+    {
+      title: "BTH",
+    },
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid fluid>
+      <Row>
+        {charts.map((e) => {
+          return <Col xs={6} md={4}>
+            <Chart {...e} />
+          </Col>;
+        })}
+      </Row>
+    </Grid>
   );
+
+  // return <div className="App"><Chart /></div>;
 }
 
 export default App;
