@@ -26,7 +26,7 @@ const Chart = (props) => {
         const converted = parsed.data.map((row) => ({
           ...row,
           Close: parseFloat(row.Close),
-        }));
+        })).reverse();
         setData(converted);
         setIsLoading(false);
       });

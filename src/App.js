@@ -86,20 +86,6 @@ function App() {
           <h3>Histórico de precios de Criptomonedas</h3>
         </Col>
       </Row>
-      <Row>
-        {selected.map((e, i) => {
-          return (
-            <Col xs={6} md={4} key={i}>
-              <Chart {...e} />
-            </Col>
-          );
-        })}
-      </Row>
-      <Row style={{ marginTop: 15 }}>
-        <Col xs={12} md={12}>
-          <Chart onlyBrush={true} label={"Bitcoin"} />
-        </Col>
-      </Row>
       <Row style={{ marginTop: 15 }}>
         <Col xs={12} md={12}>
           <Select
@@ -115,7 +101,24 @@ function App() {
       </Row>
       <Row style={{ marginTop: 15 }}>
         <Col xs={12} md={12}>
-          <p>* Agregar demasiadas gráficas podría bajar el desempeño significativamente.</p>
+          <Chart onlyBrush={true} label={"Bitcoin"} />
+        </Col>
+      </Row>
+      <Row>
+        {selected.map((e, i) => {
+          return (
+            <Col xs={6} md={4} key={i}>
+              <Chart {...e} />
+            </Col>
+          );
+        })}
+      </Row>
+      <Row style={{ marginTop: 15 }}>
+        <Col xs={12} md={12}>
+          <p>
+            * Agregar demasiadas gráficas podría disminuir el desempeño
+            significativamente.
+          </p>
         </Col>
       </Row>
     </Grid>
