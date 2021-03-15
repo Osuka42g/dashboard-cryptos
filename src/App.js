@@ -81,6 +81,11 @@ function App() {
 
   return (
     <Grid fluid>
+      <Row style={{ marginTop: 15 }}>
+        <Col xs={12} md={12}>
+          <h3>Histórico de precios de Criptomonedas</h3>
+        </Col>
+      </Row>
       <Row>
         {selected.map((e, i) => {
           return (
@@ -106,6 +111,11 @@ function App() {
             classNamePrefix="select"
             onChange={setSelected}
           />
+        </Col>
+      </Row>
+      <Row style={{ marginTop: 15 }}>
+        <Col xs={12} md={12}>
+          <p>* Agregar demasiadas gráficas podría bajar el desempeño significativamente.</p>
         </Col>
       </Row>
     </Grid>
