@@ -4,41 +4,80 @@ import Select from "react-select";
 
 import Chart from "./Chart";
 
-import datasource from "./datasource";
-
 import "./App.css";
 
-const charts = [
+const colors = [
+  "#54478c",
+  "#2c699a",
+  "#048ba8",
+  "#0db39e",
+  "#16db93",
+  "#83e377",
+  "#b9e769",
+  "#efea5a",
+  "#f1c453",
+  "#f29e4c",
+];
+
+
+const currencies = [
   {
-    label: "BTC",
-    value: "BTC",
+    label: "BinanceCoin",
+    value: "BinanceCoin",
   },
   {
-    label: "ETH",
-    value: "ETH",
+    label: "Bitcoin",
+    value: "Bitcoin",
   },
   {
-    label: "DOGE",
-    value: "DOGE",
+    value: "BitcoinCash",
+    label: "BitcoinCash",
+  },
+  {
+    value: "BitcoinSV",
+    label: "BitcoinSV",
+  },
+  {
+    label: "Cardano",
+    value: "Cardano",
+  },
+  {
+    label: "EOS",
+    value: "EOS",
+  },
+  {
+    label: "Ethereum",
+    value: "Ethereum",
+  },
+  {
+    label: "Litecoin",
+    value: "Litecoin",
+  },
+  {
+    label: "Stellar",
+    value: "Stellar",
+  },
+  {
+    label: "Tether",
+    value: "Tether",
+  },
+  {
+    label: "Tezos",
+    value: "Tezos",
   },
   {
     label: "XRP",
     value: "XRP",
   },
-];
+].map((cur, i) => ({ ...cur, color: colors[i%colors.length] }));
 
 function App() {
-  const defaultSelection = [charts[0]];
-
-  const [data, setData] = useState([]);
+  const defaultSelection = [currencies[8], currencies[9]];
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    setData(datasource);
     setSelected(defaultSelection);
   }, []);
-
-  const currencies = charts;
 
   return (
     <Grid fluid>

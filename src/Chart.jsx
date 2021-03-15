@@ -11,24 +11,39 @@ import {
 } from "recharts";
 
 const Chart = (props) => {
-  const { label } = props;
+  const { label, color, } = props;
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [domain, setDomain] = useState([0, 0]);
 
   useEffect(() => {
-    fetch("datasets/coin_Bitcoin.csv")
+    fetch(`datasets/${label}.csv`)
       .then((response) => response.text())
       .then((content) => {
+        let min = 100000;
+        let max = 0;
         const parsed = readString(content, { delimiter: ",", header: true });
-        const converted = parsed.data.map(row => ({ Close: parseFloat(row.Close), ...row }));
+        const converted = parsed.data.map((row) => {
+          if (row.Close < min) {
+            min = row.Close;
+          }
+          if (row.Close > max) {
+            max = row.Close;
+          }
+          return {
+            ...row,
+            Close: parseFloat(row.Close),
+          };
+        });
+        setDomain([min, max]);
         setData(converted);
         setIsLoading(false);
       });
   }, []);
 
   if (isLoading) {
-    return <h4 style={{ textAlign: "center", marginTop: "45%" }}>Loading</h4>;
+    return <h4 style={{ textAlign: "center", marginTop: "10%" }}>Loading</h4>;
   }
   return (
     <div style={{ width: "100%" }}>
@@ -37,7 +52,7 @@ const Chart = (props) => {
       <ResponsiveContainer width="100%" height={200}>
         <LineChart
           width={500}
-          height={200}
+          height={400}
           data={data}
           syncId="cryptoCharts"
           margin={{
@@ -49,13 +64,17 @@ const Chart = (props) => {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" />
-          <YAxis type={"number"} domain={["dataMin", "dataMax"]} />
+          <YAxis
+            type={"number"}
+            padding={{ bottom: 10, top: 10 }}
+            label="USD"
+          />
           <Tooltip />
           <Line
             type="monotone"
             dataKey="Close"
-            stroke="#8884d8"
-            fill="#8884d8"
+            stroke={color}
+            fill={color}
             dot={false}
           />
         </LineChart>

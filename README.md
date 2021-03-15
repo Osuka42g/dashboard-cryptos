@@ -8,4 +8,4 @@ Features:
 - Multi charts with sync
 - Timeframe selector
 
-Dataset from: https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory
+Dataset from: https://www.kaggle.com/philmohun/cryptocurrency-financial-data
