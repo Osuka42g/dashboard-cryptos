@@ -19,7 +19,6 @@ const colors = [
   "#f29e4c",
 ];
 
-
 const currencies = [
   {
     label: "BinanceCoin",
@@ -69,10 +68,10 @@ const currencies = [
     label: "XRP",
     value: "XRP",
   },
-].map((cur, i) => ({ ...cur, color: colors[i%colors.length] }));
+].map((cur, i) => ({ ...cur, color: colors[i % colors.length] }));
 
 function App() {
-  const defaultSelection = [currencies[8], currencies[9]];
+  const defaultSelection = [currencies[2], currencies[4]];
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
@@ -90,7 +89,12 @@ function App() {
           );
         })}
       </Row>
-      <Row>
+      <Row style={{ marginTop: 15 }}>
+        <Col xs={12} md={12}>
+          <Chart onlyBrush={true} label={"Bitcoin"} />
+        </Col>
+      </Row>
+      <Row style={{ marginTop: 15 }}>
         <Col xs={12} md={12}>
           <Select
             defaultValue={defaultSelection}

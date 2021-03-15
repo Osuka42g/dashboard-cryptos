@@ -4,7 +4,7 @@ Simple crypto historical prices dashboard.
 
 Features:
 - One year of information
-- 23 currencies available
+- +10 currencies available
 - Multi charts with sync
 - Timeframe selector
 
