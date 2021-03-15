@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { readString } from "react-papaparse";
 import {
@@ -50,15 +51,6 @@ const Chart = (props) => {
           <YAxis
             type={"number"}
           />
-          {/* <CartesianGrid strokeDasharray="3 3" />
-          {/* <Line
-            type="monotone"
-            dataKey="Close"
-            stroke={color}
-            fill={color}
-            dot={false}
-          /> */}
-
           <Brush data={data} dataKey="Date" fill={"#f29e4c"} />
         </LineChart>
         </ResponsiveContainer>
